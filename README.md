@@ -3,12 +3,21 @@
 [Hive](https://pub.dev/packages/hive)の後継にあたる[Isar](https://pub.dev/packages/isar)を使用してみたかったので作成(まだ開発中)。
 
 せっかくなので、趣味でやっている社交ダンス10種目のノートが取れるようなアプリ。
-今のところiOSとAndroidのみ対応。
-video_playerがデスクトップに対応していないので代替を考え中。
+今のところiOS、Android、デスクトップ対応。(動作確認はiOSとMacOS)
 
-特にGitHubにあげるつもりなかった(本当にIsarのお試しのつもりで始めたので)途中からGitで管理を始めたので、履歴は見ないでください😩
+特にGitHubにあげるつもりはなかったけど、Publicレポジトリに何も置いてないと、
+友人から「頑張ってない人」扱いされるので置くことにした。:)
+
+## SETUP
+
+Flutterのバージョン管理にはfvmを利用しています。
+`dart pub global activate fvm`を実行後、
+`fvm use 3.0.4 -f`を実行してください。
+
+またmelosを利用しているので、melosも有効化してください。
+`dart pub global activate melos`
 
 ## TODO
 
-Web
-Refactor
+- Web対応。
+- 急いで作ったのでリファクタリングしたい。
