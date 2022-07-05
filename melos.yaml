@@ -1,0 +1,78 @@
+name: dance_note_app
+repository: https://github.com/takewoy/dance_note_app
+packages:
+  - "*"
+
+scripts:
+  cleanPkg:
+    run: melos exec -- "fvm flutter clean"
+    description: "fvm flutter clean"
+
+  get:
+    run: melos exec -- "fvm flutter pub get"
+    description: "fvm flutter pub get"
+
+  upgrade:
+    run: melos exec -- "fvm flutter pub upgrade --major-versions"
+    description: "fvm flutter upgrade --major-versions"
+
+  analyze:
+    run: melos exec -- "fvm dart analyze lib/ --fatal-infos"
+    description: "fvm dart analyze ."
+
+  fix:apply:
+    run: melos exec -- "fvm dart fix --apply"
+    description: "dart fix --apply"
+
+  format:
+    run: melos exec -- "fvm flutter format lib/ bin/"
+    description: "fvm flutter format"
+
+  format:check:
+    run: melos exec -- "fvm flutter format --dry-run --set-exit-if-changed lib/ bin/"
+    description: "fvm flutter format --dry-run --set-exit-if-changed"
+
+  gen:all:
+    run: melos exec -- "fvm flutter pub run build_runner build --delete-conflicting-outputs"
+    description: "fvm flutter pub run build_runner build --delete-conflicting-outputs"
+
+  # gen:common:model:
+  #   run: melos exec --scope="common_model" -- "fvm dart pub run build_runner build --delete-conflicting-outputs"
+  #   description: "common_model run build runner."
+
+  # gen:css:hybrid:
+  #   run: melos exec --scope="css_hybrid" -- "fvm flutter pub run build_runner build --delete-conflicting-outputs"
+  #   description: "css_hybrid run build runner."
+
+  # gen:alfred:server:
+  #   run: melos exec --scope="alfred_server" -- "fvm flutter pub run build_runner build --delete-conflicting-outputs"
+  #   description: "alfred_server run build runner."
+
+  # start:mongoDB:
+  #   run: brew services start mongodb-community@4.2
+  #   description: "brew start mongodb"
+
+  # stop:mongoDB:
+  #   run: brew services stop mongodb-community@4.2
+  #   description: "brew stop mongodb"
+
+  # create:coverage:
+  #   run: cd packages/css_hybrid && fvm flutter test --coverage
+  #   description: "create test coverage"
+
+  # remove:coverage:generate:file:
+  #   run: cd packages/css_hybrid && lcov --remove coverage/lcov.info 'lib/**/*_model.g.dart' 'lib/**/*_model.freezed.dart' -o coverage/lcov.info
+  #   description: "remove generate file from coverage"
+
+  # gen:coverage:html:
+  #   run: cd packages/css_hybrid && genhtml coverage/lcov.info -o coverage/html
+  #   description: "create coverage html file"
+
+  # create:test:coverage:
+  #   run: |
+  #     melos run create:coverage
+  #     melos run remove:coverage:generate:file
+  #     melos run gen:coverage:html
+# brew install lcov
+# genhtml coverage/new_lcov.info -o coverage/html
+# lcov --remove coverage/lcov.info 'lib/**/*_model.g.dart' 'lib/**/*_model.freezed.dart' -o coverage/new_lcov.info

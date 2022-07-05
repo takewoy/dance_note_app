@@ -1,0 +1,11 @@
+{
+  "name": "dance_note_app",
+  "version": "1.0.0",
+  "license": "MIT",
+  "devDependencies": {
+    "husky": "^8.0.0"
+  },
+  "scripts": {
+    "prepare": "husky install"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "dart.flutterSdkPath": ".fvm/flutter_sdk",
+  "dart.runPubGetOnPubspecChanges": false,
+  "editor.defaultFormatter": "Dart-Code.dart-code",
+  "[yaml]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "cSpell.words": ["autofocus", "Chewie", "doble"]
+}
