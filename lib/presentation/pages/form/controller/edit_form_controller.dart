@@ -34,7 +34,7 @@ final editFormProvider =
     recordDanceNoteProvider,
     isMobileProvider,
     deletePicFromDiscProvider,
-    saveImageProvider.future,
+    saveImageProvider,
     saveDirProvider,
   ],
 );
@@ -89,7 +89,7 @@ class EditFormController extends StateNotifier<DanceNoteModel> {
   /// モバイルの場合は[ImagePicker]を使用して写真を選択する
   /// デスクトップの場合は[ImagePicker]が使用できないので[FilePicker]を使用する
   Future<String?> _saveImagePickerFile(ImageSource source) async {
-    final picker = await _read(saveImageProvider.future);
+    final picker = _read(saveImageProvider);
     final image = await picker(source);
     return image;
   }

@@ -33,28 +33,35 @@ final showSnackBarProvider = Provider((ref) {
 });
 
 /// OS判定用
-final isMobileProvider = Provider((_) => Platform.isAndroid || Platform.isIOS);
+final isMobileProvider = Provider((_) {
+  if (kIsWeb) {
+    return false; // Webは最上位で判定した方が良さげ??
+  } else if (Platform.isMacOS || Platform.isWindows || Platform.isLinux) {
+    return false;
+  }
+  return true;
+});
 
 /// 写真を保存するディレクトリのパス
 final saveDirProvider = Provider<String>((_) => throw UnimplementedError());
 
 /// 写真を取得する
-final saveImageProvider = FutureProvider((ref) async {
+final saveImageProvider = Provider((ref) {
   final isMobile = ref.watch(isMobileProvider);
   return (ImageSource source) async {
     if (isMobile) {
-      final picker = await ref.read(imagePickerProvider.future);
+      final picker = ref.read(imagePickerProvider);
       final image = await picker(source);
       return image;
     } else {
-      final picker = await ref.read(filePickerProvider.future);
+      final picker = ref.read(filePickerProvider);
       final image = await picker();
       return image;
     }
   };
 });
 
-final imagePickerProvider = FutureProvider((_) async {
+final imagePickerProvider = Provider((_) {
   final imagePicker = ImagePicker();
   return (ImageSource source) async {
     final image = await imagePicker.pickImage(source: source);
@@ -62,7 +69,7 @@ final imagePickerProvider = FutureProvider((_) async {
   };
 });
 
-final filePickerProvider = FutureProvider((_) async {
+final filePickerProvider = Provider((_) {
   final filePicker = FilePicker.platform;
   return () async {
     final result = await filePicker.pickFiles(type: FileType.image);
