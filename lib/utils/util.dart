@@ -32,7 +32,7 @@ final showSnackBarProvider = Provider((ref) {
       );
 });
 
-/// OS判定用
+/// 端末判定用
 final isMobileProvider = Provider((_) {
   if (kIsWeb) {
     return false; // Webは最上位で判定した方が良さげ??

@@ -12,12 +12,12 @@
 
 Flutterのバージョン管理にはfvmを利用しています。
 `dart pub global activate fvm`を実行後、
-`fvm use 3.0.4 -f`を実行してください。
+`fvm use 3.0.5 -f`を実行してください。
 
 またmelosを利用しているので、melosも有効化してください。
 `dart pub global activate melos`
 
 ## TODO
 
-- Web対応。
+- Web対応(path_providerが未対応だからちょっと難しいのかな？要調査)。
 - 急いで作ったのでリファクタリングしたい。
