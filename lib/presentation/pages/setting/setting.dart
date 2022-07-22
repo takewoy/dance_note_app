@@ -1,10 +1,10 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
-import '../../router/router.dart';
 import 'widget/dance_category_select_sheet.dart';
 import 'widget/setting_tile.dart';
 import 'widget/theme_select_sheet.dart';
@@ -15,12 +15,10 @@ class SettingPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final router = ref.watch(routerProvider);
-
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          onPressed: router.pop,
+          onPressed: () => GoRouter.of(context).pop(),
           icon: const Icon(FluentIcons.dismiss_24_regular),
         ),
         title: const Text('Setting'),

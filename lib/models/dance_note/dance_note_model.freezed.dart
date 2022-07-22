@@ -28,9 +28,7 @@ mixin _$DanceNoteModel {
   String get picOne => throw _privateConstructorUsedError;
   String get picTwo => throw _privateConstructorUsedError;
   String get picThree => throw _privateConstructorUsedError;
-  String get picFour =>
-      throw _privateConstructorUsedError; // @Default('') String movieOne,
-// @Default('') String movieTwo,
+  String get picFour => throw _privateConstructorUsedError;
   String get note => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -242,8 +240,6 @@ class _$_DanceNoteModel extends _DanceNoteModel with DiagnosticableTreeMixin {
   @override
   @JsonKey()
   final String picFour;
-// @Default('') String movieOne,
-// @Default('') String movieTwo,
   @override
   @JsonKey()
   final String note;
@@ -342,8 +338,7 @@ abstract class _DanceNoteModel extends DanceNoteModel {
   String get picThree => throw _privateConstructorUsedError;
   @override
   String get picFour => throw _privateConstructorUsedError;
-  @override // @Default('') String movieOne,
-// @Default('') String movieTwo,
+  @override
   String get note => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)

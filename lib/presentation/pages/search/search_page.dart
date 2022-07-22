@@ -1,26 +1,25 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../repositories/isar/isar.dart';
 import '../../common/common_widgets.dart';
-import '../../router/router.dart';
 import '../home/controller/home_controller.dart';
 import '../home/widget/note_tile.dart';
 import 'controller/search_controller.dart';
 
-class SearchPage extends ConsumerWidget {
+class SearchPage extends StatelessWidget {
   const SearchPage({super.key});
   static const routeName = 'search';
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final router = ref.watch(routerProvider);
+  Widget build(BuildContext context) {
     return UnfocusOnTap(
       child: Scaffold(
         appBar: AppBar(
           leading: IconButton(
-            onPressed: router.pop,
+            onPressed: () => GoRouter.of(context).pop(),
             icon: const Icon(FluentIcons.chevron_left_24_regular),
           ),
           title: const _SearchField(),

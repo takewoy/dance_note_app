@@ -10,87 +10,98 @@ import '../pages/not_found/not_found_page.dart';
 import '../pages/search/search_page.dart';
 import '../pages/setting/setting.dart';
 
-// TODO(me): use go_router_builder
+part 'router.g.dart';
+
 final routerProvider = Provider(
   (ref) => GoRouter(
-    initialLocation: '/0',
-    routes: [
-      GoRoute(
-        path: '/:index',
-        builder: (context, state) {
-          final tabIndex = ref.read(tabIndexProvider);
-          return Home(tabIndex: tabIndex);
-        },
-        routes: [
-          GoRoute(
-            path: SearchPage.routeName,
-            name: SearchPage.routeName,
-            pageBuilder: (context, state) => CustomTransitionPage(
-              key: state.pageKey,
-              transitionDuration: const Duration(milliseconds: 500),
-              transitionsBuilder: (_, animation, __, child) =>
-                  FadeTransition(opacity: animation, child: child),
-              child: const SearchPage(),
-            ),
-          ),
-          GoRoute(
-            path: SettingPage.routeName,
-            name: SettingPage.routeName,
-            pageBuilder: (context, state) => const MaterialPage(
-              fullscreenDialog: true,
-              child: SettingPage(),
-            ),
-          ),
-          GoRoute(
-            path: '${EditForm.routeName}/:id',
-            name: EditForm.routeName,
-            pageBuilder: (context, state) {
-              final id = state.params['id'];
-              // Noteの新規作成
-              if (id == 'add') {
-                return MaterialPage(
-                  fullscreenDialog: true,
-                  child: ProviderScope(
-                    overrides: [
-                      editNoteProvider.overrideWithValue(null),
-                    ],
-                    child: const EditForm(),
-                  ),
-                );
-              }
-              // Noteの編集
-              final notes = ref.read(danceNoteProvider).value ?? [];
-              final note = notes.where((e) => e.id.toString() == id);
-              // もしNoteが見つからなかった場合はNotFoundPageへ
-              if (note.isEmpty) {
-                return const MaterialPage(
-                  fullscreenDialog: true,
-                  child: NotFoundPage(),
-                );
-              }
-              return MaterialPage(
-                fullscreenDialog: true,
-                child: ProviderScope(
-                  overrides: [
-                    editNoteProvider.overrideWithValue(note.first),
-                  ],
-                  child: const EditForm(),
-                ),
-              );
-            },
-          ),
-          GoRoute(
-            path: NotFoundPage.routeName,
-            name: NotFoundPage.routeName,
-            pageBuilder: (context, state) => const MaterialPage(
-              fullscreenDialog: true,
-              child: NotFoundPage(),
-            ),
-          ),
-        ],
-      ),
-    ],
-    errorBuilder: (context, state) => const NotFoundPage(),
     urlPathStrategy: UrlPathStrategy.path,
+    errorBuilder: (context, state) => const NotFoundPage(),
+    routes: $appRoutes,
   ),
 );
+
+@TypedGoRoute<HomePageRoute>(
+  path: '/',
+  routes: [
+    TypedGoRoute<SearchPageRoute>(path: 'search'),
+    TypedGoRoute<SettingPageRoute>(path: 'setting'),
+    TypedGoRoute<EditFormRoute>(path: 'edit-form/:id'),
+    TypedGoRoute<NotFoundPageRoute>(path: 'not-found'),
+  ],
+)
+class HomePageRoute extends GoRouteData {
+  const HomePageRoute();
+
+  @override
+  Widget build(BuildContext context) => const HomePage();
+}
+
+class SearchPageRoute extends GoRouteData {
+  const SearchPageRoute();
+
+  @override
+  CustomTransitionPage<void> buildPage(BuildContext context) {
+    return CustomTransitionPage(
+      transitionDuration: const Duration(milliseconds: 500),
+      transitionsBuilder: (_, animation, __, child) =>
+          FadeTransition(opacity: animation, child: child),
+      child: const SearchPage(),
+    );
+  }
+}
+
+class SettingPageRoute extends GoRouteData {
+  const SettingPageRoute();
+
+  @override
+  MaterialPage<void> buildPage(BuildContext context) {
+    return const MaterialPage(
+      fullscreenDialog: true,
+      child: SettingPage(),
+    );
+  }
+}
+
+class EditFormRoute extends GoRouteData {
+  const EditFormRoute({required this.id});
+
+  final String id;
+  @override
+  MaterialPage<void> buildPage(BuildContext context) {
+    return MaterialPage(
+      fullscreenDialog: true,
+      child: Consumer(
+        builder: (context, ref, child) {
+          if (id == 'add') {
+            return ProviderScope(
+              overrides: [
+                editNoteProvider.overrideWithValue(null),
+              ],
+              child: const EditForm(),
+            );
+          }
+          // Noteの編集の場合
+          final notes = ref.read(danceNoteProvider).value ?? [];
+          final note = notes.where((e) => e.id.toString() == id);
+          // もしNoteが見つからなかった場合はNotFoundPageへ
+          if (note.isEmpty) {
+            return const NotFoundPage();
+          }
+          return ProviderScope(
+            overrides: [
+              editNoteProvider.overrideWithValue(note.first),
+            ],
+            child: const EditForm(),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class NotFoundPageRoute extends GoRouteData {
+  const NotFoundPageRoute();
+
+  @override
+  Widget build(BuildContext context) => const NotFoundPage();
+}

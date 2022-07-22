@@ -7,7 +7,6 @@ import '../../../../repositories/isar/isar.dart';
 import '../../../../utils/util.dart';
 import '../../../common/leading_icon.dart';
 import '../../../router/router.dart';
-import '../../form/edit_form.dart';
 import '../controller/home_controller.dart';
 
 /// 登録されている`DanceNote`を表示する
@@ -18,9 +17,7 @@ class NoteTile extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final formatter = ref.watch(formatterProvider);
-    final tabIndex = ref.watch(tabIndexProvider);
     final colorScheme = Theme.of(context).colorScheme;
-    final router = ref.watch(routerProvider);
     final note = ref.watch(indexedNoteProvider);
 
     return Slidable(
@@ -28,7 +25,7 @@ class NoteTile extends ConsumerWidget {
         motion: const ScrollMotion(),
         children: [
           SlidableAction(
-            onPressed: (_) => ref.read(shareNoteProvider)(note),
+            onPressed: (_) async => ref.read(shareNoteProvider)(note),
             backgroundColor: Colors.green.shade300,
             foregroundColor: Colors.white,
             icon: FluentIcons.share_ios_24_filled,
@@ -54,13 +51,7 @@ class NoteTile extends ConsumerWidget {
         ),
         subtitle: Text(formatter.format(note.editedAt)),
         trailing: const Icon(FluentIcons.chevron_right_24_regular),
-        onTap: () => router.goNamed(
-          EditForm.routeName,
-          params: {
-            'id': note.id.toString(),
-            'index': tabIndex.toString(),
-          },
-        ),
+        onTap: () => EditFormRoute(id: note.id.toString()).go(context),
       ),
     );
   }

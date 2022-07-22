@@ -17,7 +17,7 @@ class NotFoundPage extends StatelessWidget {
             const Text('Not found.'),
             const Gap(20),
             CommonButton(
-              onPressed: () => context.pop(),
+              onPressed: () => GoRouter.of(context).pop(),
               label: 'Go back',
             ),
           ],
