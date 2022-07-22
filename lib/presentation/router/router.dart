@@ -10,6 +10,7 @@ import '../pages/not_found/not_found_page.dart';
 import '../pages/search/search_page.dart';
 import '../pages/setting/setting.dart';
 
+// TODO(me): use go_router_builder
 final routerProvider = Provider(
   (ref) => GoRouter(
     initialLocation: '/0',
@@ -58,7 +59,7 @@ final routerProvider = Provider(
                 );
               }
               // Noteの編集
-              final notes = ref.watch(danceNoteProvider).value ?? [];
+              final notes = ref.read(danceNoteProvider).value ?? [];
               final note = notes.where((e) => e.id.toString() == id);
               // もしNoteが見つからなかった場合はNotFoundPageへ
               if (note.isEmpty) {
