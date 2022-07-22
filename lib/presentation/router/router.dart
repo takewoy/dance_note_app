@@ -14,6 +14,7 @@ part 'router.g.dart';
 
 final routerProvider = Provider(
   (ref) => GoRouter(
+    debugLogDiagnostics: true,
     urlPathStrategy: UrlPathStrategy.path,
     errorBuilder: (context, state) => const NotFoundPage(),
     routes: $appRoutes,
